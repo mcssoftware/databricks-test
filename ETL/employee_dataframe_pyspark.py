@@ -12,7 +12,7 @@ job = sqldata.getSqlData(spark, "Employment_Job")
 # COMMAND ----------
 
 empCols = [col("Worker_Id").alias("workdayId"), col("Party_Id").alias("partyId"), col("Guid").alias("guid"),col("Legal_First_Name").alias("firstName"), col("Legal_Last_Name").alias("lastName"), col("Preferred_First_Name").alias("preferredFirstName"), col("Preferred_Last_Name").alias("preferredLastName"),col("email_address_workemail").alias("email") ]
-employee = personal[empCols].where(col("partyId").isNotNull()).toPandas()
+employee = personal[empCols].where(col("partyId").isNotNull())
 # display(employee.count())
 
 # COMMAND ----------
@@ -46,7 +46,7 @@ database="myplus"
 collection="employee"
 pipeline="[ { '$project': { 'partyId': 1, 'createdDate': 1}}]"
 mongoemployee = spark.read.format("mongo").option("database", database).option("collection", collection).option("pipeline", pipeline).option("spark.mongodb.input.uri", connectionString).load()
-display(mongoemployee)
+mongoemployee = mongoemployee.drop('_id')
 
 # COMMAND ----------
 
@@ -56,13 +56,14 @@ if mongoemployee.count() > 0:
 else: 
     df['createdDate'] = pd.Timestamp.now()
 df['updatedDate'] = pd.Timestamp.now()
+df['isDeleted'] = False
 df.head()
 
 # COMMAND ----------
 
-# spark.createDataFrame(df).write.format("mongo") \
-#     .option("spark.mongodb.output.uri", connectionString) \
-#     .option("database",database) \
-#     .option("collection",collection) \
-#     .option("idFieldList","partyId") \
-#     .mode("overwrite").save()
+spark.createDataFrame(df).write.format("mongo") \
+    .option("spark.mongodb.output.uri", connectionString) \
+    .option("database",database) \
+    .option("collection",collection) \
+    .option("idFieldList","partyId") \
+    .mode("overwrite").save()
