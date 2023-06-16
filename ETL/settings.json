@@ -1,0 +1,38 @@
+[
+    {
+        "key": "SQL_DATABASE_HOST",
+        "value": "myplus-dbx.database.windows.net"
+    },
+    {
+        "key": "SQL_DATABASE_PORT",
+        "value": "1433"
+    },
+    {
+        "key": "SQL_DATABASE_NAME",
+        "value": "myplus"
+    },
+    {
+        "key": "SQL_DATABASE_USER",
+        "value": "sbhandari"
+    },
+    {
+        "key": "SQL_DATABASE_PASSWORD",
+        "value": "vDUwaSAGnZGb5rqHIrrhdQaoLPL7fyxR"
+    },
+    {
+        "key": "MONGO_DATABASE_HOST",
+        "value": "myplus-dbx.database.windows.net"
+    },
+    {
+        "key": "MONGO_DATABASE_NAME",
+        "value": "myplus"
+    },
+    {
+        "key": "MONGO_DATABASE_USER",
+        "value": "sbhandari"
+    },
+    {
+        "key": "MONGO_DATABASE_PASSWORD",
+        "value": "vDUwaSAGnZGb5rqHIrrhdQaoLPL7fyxR"
+    }
+]

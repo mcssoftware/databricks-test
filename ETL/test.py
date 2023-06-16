@@ -1,11 +1,31 @@
 # Databricks notebook source
-#EMP DataFrame
-empData = [(1,"Smith",10), (2,"Rose",20),
-    (3,"Williams",10), (4,"Jones",30)
+emp = [('SQL_DATABASE_HOST','myplus-dbx.database.windows.net'), \
+    ('SQL_DATABASE_PORT','1433'), \
+    ('SQL_DATABASE_NAME','myplus'), \
+    ('SQL_DATABASE_USER','sbhandari'), \
+    ('SQL_DATABASE_PASSWORD','vDUwaSAGnZGb5rqHIrrhdQaoLPL7fyxR'), \
+    ('MONGO_DATABASE_HOST','myplus-dbx.database.windows.net'), \
+    ('MONGO_DATABASE_NAME','myplus'), \
+    ('MONGO_DATABASE_USER','sbhandari'), \
+    ('MONGO_DATABASE_PASSWORD','vDUwaSAGnZGb5rqHIrrhdQaoLPL7fyxR') \
   ]
-empColumns = ["emp_id","name","emp_dept_id"]
-empDF = spark.createDataFrame(empData,empColumns)
-empDF.show()
+empColumns = ["key","value"]
+
+empDF = spark.createDataFrame(data=emp, schema = empColumns)
+
+# COMMAND ----------
+
+( empDF
+      .coalesce(1)
+      .write
+      .mode("overwrite")
+      .json('settings.json')
+  )
+
+# COMMAND ----------
+
+# MAGIC %fs
+# MAGIC ls
 
 # COMMAND ----------
 
